@@ -1,4 +1,5 @@
-﻿using System;
+﻿using _05._04.UseCases;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,27 +9,28 @@ namespace _05._04
 {
     public class StudentService : IStudentService
     {
-        private List<Student> _students = new();
+        public List<StudentUseCase> _students = new List<StudentUseCase>();
 
-        public IEnumerable<Student> GetAllStudents()
+        public IEnumerable<StudentUseCase> GetAllStudents()
         {
             return _students;
         }
 
-        public Student GetStudentById(int studentId)
+        public StudentUseCase GetStudentById(int studentId)
         {
-            return _students.FirstOrDefault(s => s.StudentId == studentId);
+            return _students.FirstOrDefault(s => s.Id == studentId);
         }
 
-        public void AddStudent(Student student)
+        public void AddStudent(String firsName, String lastname)
         {
-            student.StudentId = _students.Any() ? _students.Max(s => s.StudentId) + 1 : 1;
+            var student = new StudentUseCase(0, firsName, lastname, 0);
+            student.Id = _students.Any() ? _students.Max(s => s.Id) + 1 : 1;
             _students.Add(student);
         }
 
-        public void UpdateStudent(Student student)
+        public void UpdateStudent(StudentUseCase student)
         {
-            var existingStudent = _students.FirstOrDefault(s => s.StudentId == student.StudentId);
+            var existingStudent = _students.FirstOrDefault(s => s.Id == student.Id);
             if (existingStudent != null)
             {
                 existingStudent.FirstName = student.FirstName;
@@ -39,7 +41,7 @@ namespace _05._04
 
         public void DeleteStudent(int studentId)
         {
-            var studentToRemove = _students.FirstOrDefault(s => s.StudentId == studentId);
+            var studentToRemove = _students.FirstOrDefault(s => s.Id == studentId);
             if (studentToRemove != null)
             {
                 _students.Remove(studentToRemove);
@@ -48,10 +50,10 @@ namespace _05._04
 
         public void AddGrade(int studentId, int grade)
         {
-            var student = _students.FirstOrDefault(s => s.StudentId == studentId);
+            var student = _students.FirstOrDefault(s => s.Id == studentId);
             if (student != null)
             {
-                student.Grades.Add(grade);
+                student.Grades = grade;
             }
         }
     }

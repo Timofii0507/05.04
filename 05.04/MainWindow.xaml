@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:_05._04"
         mc:Ignorable="d"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        Title="Student Management App" Height="450" Width="800">
+        Title="Student Management App" MinHeight="450" MinWidth="800">
 
     <Window.Resources>
         <!-- Стиль для TextBox з відображенням тексту-підказки -->
@@ -47,17 +47,17 @@
     </Window.Resources>
 
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
         <!-- Список студентів -->
-        <ListBox x:Name="studentListBox" 
-                 HorizontalAlignment="Left" VerticalAlignment="Top" 
-                 Width="300" Height="300"
-                 DisplayMemberPath="FullName"
-                 ItemContainerStyle="{StaticResource CustomListBoxItemStyle}"
-                 Style="{StaticResource MaterialDesignListBox}">
-        </ListBox>
+        <DataGrid x:Name="dgStudents" Background="White" MouseDoubleClick="dgStudents_MouseDoubleClick">
+            
+        </DataGrid>
 
         <!-- Панель деталей студента -->
-        <StackPanel Margin="320,50,20,20">
+        <StackPanel Grid.Column="2" Margin="25">
             <TextBox x:Name="firstNameTextBox"
                      Text=""
                      Tag="Enter First Name"
@@ -70,16 +70,8 @@
                      Margin="0,0,0,10"/>
             <Button Content="Add Student" Click="AddStudent_Click" Margin="0,0,0,10"
                     Style="{StaticResource MaterialDesignRaisedButton}"/>
-            <Button Content="Update Student" Click="UpdateStudent_Click" Margin="0,0,0,10"
-                    Style="{StaticResource MaterialDesignRaisedButton}"/>
             <Button Content="Delete Student" Click="DeleteStudent_Click"
                     Style="{StaticResource MaterialDesignRaisedButton}"/>
-            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                <TextBox x:Name="gradeTextBox" Width="85" Margin="0,0,10,0" Tag="Enter Grade"
-                         Style="{StaticResource HintTextBoxStyle}"/>
-                <Button Content="Add Grade" Click="AddGrade_Click"
-                        Style="{StaticResource MaterialDesignRaisedButton}"/>
-            </StackPanel>
         </StackPanel>
     </Grid>
 </Window>
